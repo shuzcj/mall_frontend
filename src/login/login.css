@@ -1,0 +1,12 @@
+.centered-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* 确保它在页面的最前层 */
+    background-color: #fff; /* 给表单一个背景色 */
+    padding: 20px; /* 添加一些内边距，使表单更美观 */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 添加阴影，使表单浮在页面上 */
+    border-radius: 8px; /* 圆角边框 */
+    width: 400px; /* 设置表单的最大宽度 */
+}
