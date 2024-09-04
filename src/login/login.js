@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import './login.css';
 import { Button, Form, Input } from 'antd';
 import axios from 'axios';
-
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 const Login = () => {
     const [loading, setLoading] = useState(false); // 用于管理提交按钮的加载状态
 
     // 表单提交成功时调用
     const onFinish = (values) => {
         // 发送登录请求
-        axios.post('http://localhost:3003/user/login', {
+        axios.post(`${apiBaseUrl}/user/login`, {
             username: values.username, // 获取表单中输入的用户名
             password: values.password, // 获取表单中输入的密码
         })
@@ -34,7 +34,7 @@ const Login = () => {
         const token = localStorage.getItem('token');
         console.log('Token:', token);
         // 发送带有 Authorization 头的 GET 请求
-        axios.get('http://localhost:3003/user/hello', {
+        axios.get('${apiBaseUrl}/user/hello', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

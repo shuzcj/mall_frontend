@@ -1,6 +1,7 @@
 import React from "react";
 import CardItem from "./CardItem"; // 假设 CardItem 在一个独立的文件中
 import './main_page.css';
+import Search from "./search";
 function MainPage() {
     const categoryImageUrl = [
         {url:'https://down-sg.img.susercontent.com/file/567b6dc3d7ebd8d1a3fd18b84ea47d9a_tn',title:"women's clothing"},
@@ -10,7 +11,7 @@ function MainPage() {
     return (
         <div style={{ height: '2000px' }}>
             <header className="header">
-                test
+                <Search/>
             </header>
             <div className='container'>
                 {/* category */}
