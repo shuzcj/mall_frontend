@@ -1,19 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import logo from './logo.svg';
-import './App.css';
-import MainPage from './main/main_page'
-import Login from "./login/login";
-import Product from "./product/product";
+
+import MainPage from './main/MainPage';
+import Login from "./login/Login";
+import ProductDetail from "./product/ProductDetail";
+import './App.css'; // Ensure the CSS is imported if not already
 
 function App() {
     return (
         <Router>
-            <div className="App" style={{ backgroundColor: '#f8f8f8' }}>
+            <div>
                 <Routes>
                     <Route path="/main" element={<MainPage />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/productDetail" element={<Product />} />
+                    <Route path="/productDetail" element={<ProductDetail />} />
                 </Routes>
             </div>
         </Router>

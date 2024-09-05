@@ -1,7 +1,7 @@
 import React from "react";
 import CardItem from "./CardItem"; // 假设 CardItem 在一个独立的文件中
-import './main_page.css';
-import Search from "./search";
+import './MainPage.css';
+import TopBar from "../header/TopBar";
 function MainPage() {
     const categoryImageUrl = [
         {url:'https://down-sg.img.susercontent.com/file/567b6dc3d7ebd8d1a3fd18b84ea47d9a_tn',title:"women's clothing"},
@@ -11,12 +11,12 @@ function MainPage() {
     return (
         <div style={{ height: '2000px' }}>
             <header className="header">
-                <Search/>
+                <TopBar/>
             </header>
             <div className='container'>
                 {/* category */}
                 <div className='item'>
-                    <div style={{ padding: '10px',color: 'rgba(0, 0, 0, .54)',fontSize: '1rem',fontWeight: 500 }}>Category</div>
+                    <div style={{ padding: '10px',color: 'rgba(0, 0, 0, .54)',fontSize: '1rem',fontWeight: 900 }}>Category</div>
 
                     <div style={{ width: '100%', height: '1px', backgroundColor: 'gray' }} />
                     <div style={{ padding: '10px' }}>

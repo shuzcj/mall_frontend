@@ -1,8 +1,11 @@
 import React from "react";
 import {Button} from "antd";
 import axios from "axios";
+import "./ProductDetail.css"
 
-function Product() {
+import TopBar from "../header/TopBar";
+
+function ProductDetail() {
 
     const getProduct = () => {
         const token = localStorage.getItem('token');
@@ -21,11 +24,18 @@ function Product() {
             });
     }
 
+
+
+
+
     return (
-        <div>
-            <h1>Product</h1>
-            <Button onClick={getProduct}>获取产品</Button>
+        <div >
+            <TopBar/>
+            <div className="business">
+
+            </div>
+
         </div>
     );
 }
-export default Product;
+export default ProductDetail;

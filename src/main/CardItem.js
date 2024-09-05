@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Image } from 'antd';
-import './main_page.css';
+import './MainPage.css';
 
 
 function CardItem({ url, title }) {
