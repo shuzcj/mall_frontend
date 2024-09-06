@@ -1,8 +1,11 @@
-.business{
+.item{
     border-radius: 10px;
-    width: 1200px;
-    margin: 20px auto 20px auto;
     background-color: white;
-    height: 60px;
+    min-height: 60px;
 
+}
+
+.content{
+    width: 1400px;
+    margin: 20px auto 20px auto;
 }

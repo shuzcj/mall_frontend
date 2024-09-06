@@ -22,17 +22,17 @@ function topBar() {
 
     return (
         <div style={{width:"100%", background: "#ffffff" }}>
-        <div style={{ width: 1200,margin:'0px auto 0 auto',padding:"10px 0 10px 0" }} >
+        <div style={{ width: 1400,margin:'0px auto 0 auto',padding:"10px 0 10px 0" }} >
 
-            <div style={{width:"100%",height: 24,justifyContent:"center",textAlign:"center",fontSize:20,}}>
-                <a style={{float: "left",lineHeight:"24px",textDecoration:"none",color:"rgba(0,0,0,.6)",fontWeight:600,}}  href={''}>home page</a>
-                <div style={{float: "right",lineHeight:"24px"}}>
+            <div style={{width:"100%",justifyContent:"space-between",alignItems:"center",fontSize:19,display:"flex"}}>
+                <a style={{textDecoration:"none",color:"rgba(0,0,0,.6)",fontWeight:500,}}  href={''}>home page</a>
+                <div >
                     <Dropdown
                     menu={{
                         items,
                     }}
                 >
-                        <a href="#" style={{color:"rgba(0,0,0,.6)",fontWeight:600,}} onClick={(e) => e.preventDefault()}>
+                        <a href="#" style={{color:"rgba(0,0,0,.6)",fontWeight:500,}} onClick={(e) => e.preventDefault()}>
                             <Space>
                                 <Avatar size={28}/>
                                 name
