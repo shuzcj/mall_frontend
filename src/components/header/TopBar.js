@@ -1,13 +1,16 @@
 import React from "react";
 import { AudioOutlined } from '@ant-design/icons';
-import {Avatar, Dropdown, Input, Space} from 'antd';
-
+import {Avatar, Dropdown, Input, Select, Space} from 'antd';
+import AdvancedSearch from "./AdvancedSearch";
 import axios from "axios";
+
+const baseUrl = process.env.REACT_APP_API_BASE_URL;
 const { Search } = Input;
 
-const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+
 var items;
-function topBar() {
+function TopBar() {
+    console.log(baseUrl)
 
     const searchAxios=(value)=>{
         axios.get("${apiBaseUrl}/search",{query:value})
@@ -46,6 +49,7 @@ function topBar() {
             </div>
 
             <div style={{margin:"15px 0 0 0"}}>
+                <div style={{justifyContent:"space-between",display:"flex"}}>
             <Search
                 placeholder=""
                 allowClear
@@ -53,6 +57,10 @@ function topBar() {
                 size={"large"}
                 onSearch={onSearch}
             />
+                    <Select defaultValue= 'Search in this shop' style={{width: 240,}}
+                        options={[{value: 'Search in this shop', label: 'Search in this shop',},{value: 'Search in whole mall',label: 'Search in whole mall',}]} size={"large"}/>
+                </div>
+               <AdvancedSearch/>
             </div>
         </div>
 
@@ -65,16 +73,16 @@ items = [
     {
         key: '1',
         label: (
-            <a target="_blank"  href="https://www.antgroup.com">
-                My Count
-            </a>
+            <a target="_blank" rel="noopener noreferrer" href={`${baseUrl}/myAccount`}>
+                My Account
+            < /a>
         ),
     },
     {
         key: '2',
         label: (
-            <a target="_blank"  href="https://www.antgroup.com">
-                My Purchase
+            <a target="_blank"  href={baseUrl+'/store'}>
+                My Store
             </a>
         ),
     },
@@ -82,7 +90,7 @@ items = [
 
 
 
-export default topBar;
+export default TopBar;
 
 
 

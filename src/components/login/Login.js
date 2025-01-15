@@ -9,7 +9,7 @@ const Login = () => {
     // 表单提交成功时调用
     const onFinish = (values) => {
         // 发送登录请求
-        axios.post(`${apiBaseUrl}/user/login`, {
+        axios.post(`http://127.0.0.1:8080/user/login`, {
             username: values.username, // 获取表单中输入的用户名
             password: values.password, // 获取表单中输入的密码
         })
@@ -21,7 +21,7 @@ const Login = () => {
                 localStorage.setItem('token', token);
 
                 // 调用其他 API
-                callHello();
+                //callHello();
             })
             .catch(error => {
                 console.error('Login failed:', error);

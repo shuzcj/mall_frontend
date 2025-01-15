@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Image } from "antd";
 
 function ImagesDisplay({ imageUrls }) {
     // State to track the currently displayed image
-    const [imageNow, setImageNow] = useState(imageUrls.length ? imageUrls[0] : "");
+    const [imageNow, setImageNow] = useState("");
     // State to track the hovered thumbnail
     const [hoveredIndex, setHoveredIndex] = useState(null);
+
+    useEffect(() => {
+        if(imageUrls.length > 0) {
+            setImageNow(imageUrls[0]);
+        }
+        else {
+            setImageNow("");
+        }
+    }, [imageUrls]);
 
     return (
         <div style={{ display: "flex", width: 620 }}>

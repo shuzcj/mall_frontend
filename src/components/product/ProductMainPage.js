@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {Avatar, Breadcrumb, Button, Carousel, Image} from "antd";
 import axios from "axios";
-import "./ProductDetail.css";
+import "./ProductMainPage.css";
 import TopBar from "../header/TopBar";
 import { ShopOutlined } from "@ant-design/icons";
 import ImagesDisplay from "./ImagesDisplay";
+import DetailDisplay from "./DetailDisplay";
+import Comment from "./Comment";
 
-
-function ProductDetail() {
+function ProductMainPage() {
     // Hook to manage the image URLs
     const [imageUrls, setImageUrls] = useState([]);
 
@@ -42,9 +43,11 @@ function ProductDetail() {
 
     return (
         <div>
-            <TopBar/>
+            <header className="header">
+                <TopBar/>
+            </header>
             <div className="content">
-                <Breadcrumb style={{ margin: '16px 0' }}
+                <Breadcrumb style={{margin: '16px 0' }}
                             items={[
                                 { title: 'Home' },
                                 { title: <a href="">Application Center</a> },
@@ -62,16 +65,25 @@ function ProductDetail() {
                     <Button style={{ marginRight: 10, fontSize: 18 }}><ShopOutlined />entry</Button>
                 </div>
 
-                {/* Carousel Section */}
-                <div className="item" style={{ marginTop: 20, padding: 10,display:"flex" }}>
+
+                <div className="item" style={{ marginTop: 20, padding: 10,display:"flex",justifyContent:'space-between' }}>
                     <ImagesDisplay imageUrls={imageUrls} />
-                    <div>
-                        
-                    </div>
+                    <DetailDisplay />
                 </div>
+
+                <div className='item' style={{marginTop:20,padding:10}}>
+                    <div style={{fontSize:20,fontWeight:600,margin:10}}>
+                        Comments
+                    </div>
+                    <Comment/>
+                    <Comment/>
+                </div>
+
+
+
             </div>
         </div>
     );
 }
 
-export default ProductDetail;
+export default ProductMainPage;

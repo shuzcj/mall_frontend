@@ -1,6 +1,6 @@
 .header{
     width:100%;
-    height: 100px;
+    height: 160px;
     background-color: #ffffff;
     position: fixed;
     top:0;
@@ -19,7 +19,7 @@
     width:1400px;
     margin-left:auto;
     margin-right:auto;
-    padding-top:100px;
+    padding-top:160px;
     /*use padding to keep the color*/
     font-family: Roboto,Helvetica Neue,Helvetica,Arial,文泉驛正黑,WenQuanYi Zen Hei,Hiragino Sans GB,儷黑 Pro,LiHei Pro,Heiti TC,微軟正黑體,Microsoft JhengHei UI,Microsoft JhengHei,sans-serif
 }
