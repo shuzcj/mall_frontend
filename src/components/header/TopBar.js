@@ -10,7 +10,7 @@ const { Search } = Input;
 
 var items;
 function TopBar() {
-    console.log(baseUrl)
+
 
     const searchAxios=(value)=>{
         axios.get("${apiBaseUrl}/search",{query:value})

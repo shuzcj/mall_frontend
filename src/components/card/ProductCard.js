@@ -4,6 +4,8 @@ import {StarFilled} from "@ant-design/icons";
 
 function ProductCard(props) {
 
+    const imagesBaseUrl=process.env.REACT_APP_BACKEND_API_URL+'/images/products/';
+
     return (
         <div style={{
             width: 192,
@@ -25,27 +27,26 @@ function ProductCard(props) {
              }}
              onClick={() => {console.log(1)}}
         >
-            <Image height={190} width={192} preview={false} src={'/temp/cat.jpg'}/>
+            <Image height={190} width={192} preview={false} src={imagesBaseUrl+props.data.imageUrls.split(',')[0]}/>
             <div style={{padding: 10}}>
                 <p style={{
-                    height: 60,
+                    height:52,
                     lineHeight: '30px',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     display: '-webkit-box',
                     WebkitBoxOrient: 'vertical',
-                    WebkitLineClamp: 2,
+                    WebkitLineClamp: 1,
                     margin: 0,
-                    fontSize: 16,
+                    fontSize: 24,
                 }}>
-                    name name name name name name name namename name name name name name name namename name name name
-                    name name name name
+                    {props.data.name}
                 </p>
-                <div style={{fontSize: 20, color: "#ffa241", height: 16}}>20</div>
-                <div style={{justifyContent: "start", display: "flex"}}>
+                <div style={{fontSize: 20, color: "#ffa241", height: 24}}>{props.data.price}</div>
+                <div style={{justifyContent: "start", display: "flex",alignItems:"center"}}>
                     <StarFilled style={{fontSize: 20, color: '#fffd11'}}/>
-                    <p>4.9</p>
-                    <p style={{marginLeft: 20}}>100 sold</p>
+                    <p>{props.data.rating}</p>
+                    <p style={{marginLeft: 30}}>{props.data.sold} sold</p>
                 </div>
             </div>
         </div>

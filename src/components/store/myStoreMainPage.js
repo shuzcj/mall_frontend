@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import TopBar from "../header/TopBar";
 import {Avatar, Button, Pagination, Select} from "antd";
 import {MessageOutlined, ShopOutlined, UserOutlined} from "@ant-design/icons";
@@ -6,10 +6,16 @@ import StoreDetailData from "./storeDetailData";
 import ProductCard from "../card/ProductCard";
 import addProductsModal from "./addProductsModal";
 import AddProductsModal from "./addProductsModal";
+import axios from "axios";
 function StoreMainPage() {
-
-    const [activeOption, setActiveOption] = useState(null); // Track the active option
+    const apiBaseUrl = process.env.REACT_APP_BACKEND_API_URL;
+    const token = localStorage.getItem('token');
+    const [activeOption, setActiveOption] = useState("latest"); // Track the active option,latest,topSales,asc,desc
     const [selectValue, setSelectValue] = useState(null); // Track the selected value in the dropdown
+    const [page,setPage]=useState(1);
+    const [status,setStatus]=useState('all');//all,listed,outOfStock,unlisted
+    const [total,setTotal]=useState(0);
+    const [products,setProducts]=useState([]);
 
     const handleButtonClick = (option) => {
         setActiveOption(option); // Set the active option when a button is clicked
@@ -21,6 +27,26 @@ function StoreMainPage() {
         setSelectValue(value); // Update the dropdown's value
     };
 
+    useEffect(()=>{
+        console.log(page,status,activeOption)
+        const params={
+            pageNumber:page,
+            pageSize:10,
+            status:status,
+            sort:activeOption,
+            userId:null,
+
+        }
+        axios.get(
+            apiBaseUrl+'/product',
+            {params:params, headers: {'Authorization': `Bearer ${token}`}})
+            .then(res=>{
+                console.log(res.data)
+                setProducts(res.data.data.products)
+                setTotal(res.data.data.total)
+
+            })
+    },[page,status,activeOption])
 
     return (
         <div>
@@ -90,11 +116,11 @@ function StoreMainPage() {
                     <div
                         style={{justifyContent: "end", display: "flex", margin: '10px 0 20px 0', alignItems: "center"}}>
                         <div style={{fontSize: 20}}>products status:</div>
-                        <Select defaultValue="all" style={{width: 120, margin: '0 20px 0 20px'}}
+                        <Select defaultValue="all" style={{width: 120, margin: '0 20px 0 20px'}} onChange={(e)=>{setStatus(e)}}
                                 options={[
                                     {value: 'all', label: 'All',},
                                     {value: 'listed', label: "Listed"},
-                                    {value: 'o', label: 'Out of Stock'},
+                                    {value: 'outOfStock', label: 'Out of Stock'},
                                     {value: 'unlisted', label: "Unlisted"}
                                 ]}
                         />
@@ -104,7 +130,7 @@ function StoreMainPage() {
                 </div>
                 <div style={{justifyContent: "start", display: "flex", flexWrap: "wrap"}}>
                     {
-                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
+                        products.map((item, index) => {
                             let style = {};
                             if (index === 0 || index === 6) {
                                 style = {marginRight: 24, marginLeft: 0};
@@ -119,20 +145,22 @@ function StoreMainPage() {
 
                             return (
                                 <div style={style} key={index}>
-                                    <ProductCard/>
+                                    <ProductCard data={item}/>
                                 </div>
                             );
                         })
                     }
                 </div>
                 <div style={{width: '100%', marginTop: 20, padding: 10}}>
-                    <Pagination defaultCurrent={1} total={500000} align={'center'}/>
+                    <Pagination defaultCurrent={1} total={total} align={'center'} defaultPageSize={10} showSizeChanger={false}
+                                onChange={(page)=>{setPage(page)}}/>
                 </div>
             </div>
 
 
         </div>
     )
+
 }
 
 export default StoreMainPage;
