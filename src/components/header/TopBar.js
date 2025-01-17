@@ -81,7 +81,7 @@ items = [
     {
         key: '2',
         label: (
-            <a target="_blank"  href={baseUrl+'/store'}>
+            <a target="_blank"  href={baseUrl+'/myStore'}>
                 My Store
             </a>
         ),

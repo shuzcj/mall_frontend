@@ -12,6 +12,7 @@ function AddProductsModal(props) {
     const [open, setOpen] = useState(false);
     const [fileList, setFileList] = useState([]);
     const [initialFileList, setInitialFileList] = useState([]);
+    const [form] = Form.useForm(); // Create a Form instance
     const token = localStorage.getItem('token');
     const apiBaseUrl = process.env.REACT_APP_BACKEND_API_URL;
 
@@ -76,6 +77,8 @@ function AddProductsModal(props) {
         })
             .then(response => {
                 console.log('Hello API response:', response);
+                setOpen(false);
+                form.resetFields()
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -91,182 +94,169 @@ function AddProductsModal(props) {
         setOpen(true);
     };
     const handleOk = () => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-            setOpen(false);
-        }, 3000);
+        form.submit(); // Trigger the form's submit programmatically
     };
     const handleCancel = () => {
         setOpen(false);
+        form.resetFields()
     };
     return (
         <>
             <Button type="primary" onClick={showModal}>
                 add products
             </Button>
-            <Modal
-                width={800}
-                open={open}
-                title="Add Products"
-                onOk={handleOk}
-                onCancel={handleCancel}
-                footer={[
-                    <Button key="back" onClick={handleCancel}>
-                        Return
-                    </Button>,
-                    <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
-                        Submit
-                    </Button>,
-                    <Button
-                        key="link"
-                        href="https://google.com"
-                        target="_blank"
-                        type="primary"
-                        loading={loading}
-                        onClick={handleOk}
-                    >
-                        Search on Google
-                    </Button>,
-                ]}
-            >
 
-                <Form
-                    name="basic"
-                    labelCol={{
-                        span: 8,
-                    }}
-                    wrapperCol={{
-                        span: 16,
-                    }}
-                    style={{
-                        maxWidth: 600,
-                    }}
-                    initialValues={{
-                        remember: true,
-                    }}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                    autoComplete="off"
-                >
-                    <Form.Item
-                        label="product name"
-                        name="productName"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your username!',
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="description"
-                        name="description"
-
-                    >
-                        <TextArea rows={4}  maxLength={6} />
-
-                    </Form.Item>
-
-
-                    <Form.Item
-                        label="price"
-                        name="price"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input product price!',
-                            },
-                        ]}
-                    >
-                        <InputNumber min={0} max={1000000}   />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="stock"
-                        name="stock"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input product stock!',
-                            },
-                        ]}
-                    >
-                        <InputNumber min={1} max={1000000}   />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="status"
-                        name="status"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please select product status!',
-                            },
-                        ]}
-                    >
-                    <Select
-                        style={{
-                            width: 120,
-                        }}
-                        options={[
-                            {
-                                value: 'listed',
-                                label: 'listed',
-                            },
-                            {
-                                value: 'unlisted',
-                                label: 'unlisted',
-                            }
-                        ]}
-                    />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="category"
-                        name="category"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please select product category!',
-                            },
-                        ]}
-                    >
-                        <Select
-                            style={{
-                                width: 200,
-                            }}
-                            options={CATEGORIES}
-                        />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="upload image"
-                        name="uploadImage"
-                        rules={[
-                            {
-                                validator: (_, value) =>
-                                    fileList.length > 0 ? Promise.resolve() : Promise.reject(new Error('Please upload at least one image')),
-                            },
-                        ]}
-
-                    >
-                        <UploadImage maxCount={5} setFileList={(e)=>setFileList(e)} fileList={fileList} />
-                        
-                    </Form.Item>
-
-
-                    <Form.Item label={null}>
-                        <Button type="primary" htmlType="submit">
+                <Modal
+                    width={800}
+                    open={open}
+                    title="Add Products"
+                    onOk={handleOk}
+                    onCancel={handleCancel}
+                    footer={[
+                        <Button key="back" onClick={handleCancel}>
+                            Return
+                        </Button>,
+                        <Button key="submit" type="primary"  loading={loading} onClick={handleOk}>
                             Submit
                         </Button>
-                    </Form.Item>
-                </Form>
+                    ]}
 
-            </Modal>
+                >
+
+                    <Form
+                        form={form}
+                        name="basic"
+                        labelCol={{
+                            span: 8,
+                        }}
+                        wrapperCol={{
+                            span: 16,
+                        }}
+                        style={{
+                            maxWidth: 600,
+                        }}
+                        initialValues={{
+                            remember: true,
+                        }}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                        autoComplete="off"
+                    >
+                        <Form.Item
+                            label="product name"
+                            name="productName"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your username!',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="description"
+                            name="description"
+
+                        >
+                            <TextArea rows={4}  maxLength={6} />
+
+                        </Form.Item>
+
+
+                        <Form.Item
+                            label="price"
+                            name="price"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input product price!',
+                                },
+                            ]}
+                        >
+                            <InputNumber min={0} max={1000000}   />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="stock"
+                            name="stock"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input product stock!',
+                                },
+                            ]}
+                        >
+                            <InputNumber min={1} max={1000000}   />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="status"
+                            name="status"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please select product status!',
+                                },
+                            ]}
+                        >
+                        <Select
+                            style={{
+                                width: 120,
+                            }}
+                            options={[
+                                {
+                                    value: 'listed',
+                                    label: 'listed',
+                                },
+                                {
+                                    value: 'unlisted',
+                                    label: 'unlisted',
+                                }
+                            ]}
+                        />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="category"
+                            name="category"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please select product category!',
+                                },
+                            ]}
+                        >
+                            <Select
+                                style={{
+                                    width: 200,
+                                }}
+                                options={CATEGORIES}
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="upload image"
+                            name="uploadImage"
+                            rules={[
+                                {
+                                    validator: (_, value) =>
+                                        fileList.length > 0 ? Promise.resolve() : Promise.reject(new Error('Please upload at least one image')),
+                                },
+                            ]}
+
+                        >
+                            <UploadImage maxCount={5} setFileList={(e)=>setFileList(e)} fileList={fileList} />
+
+                        </Form.Item>
+
+
+
+                    </Form>
+
+                </Modal>
+
         </>
     );
 }

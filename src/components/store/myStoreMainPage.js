@@ -114,25 +114,25 @@ function StoreMainPage() {
                                 style = {marginLeft: 24, marginRight: 24};
                             }
                             if (index > 5) {
-                                    style = {...style, marginTop: 20};
-                                }
+                                style = {...style, marginTop: 20};
+                            }
 
-                                return (
-                                    <div style={style} key={index}>
-                                        <ProductCard/>
-                                    </div>
-                                );
-                            })
-                        }
-                    </div>
-                    <div style={{width: '100%', marginTop: 20, padding: 10}}>
-                        <Pagination defaultCurrent={1} total={500000} align={'center'}/>
-                    </div>
+                            return (
+                                <div style={style} key={index}>
+                                    <ProductCard/>
+                                </div>
+                            );
+                        })
+                    }
                 </div>
-
-
+                <div style={{width: '100%', marginTop: 20, padding: 10}}>
+                    <Pagination defaultCurrent={1} total={500000} align={'center'}/>
+                </div>
             </div>
-            )
-            }
 
-            export default StoreMainPage;
+
+        </div>
+    )
+}
+
+export default StoreMainPage;
