@@ -7,6 +7,7 @@ import ProductCard from "../card/ProductCard";
 import addProductsModal from "./addProductsModal";
 import AddProductsModal from "./addProductsModal";
 import axios from "axios";
+import useAuthCheck from "../hooks/useAuthCheck";
 function StoreMainPage() {
     const apiBaseUrl = process.env.REACT_APP_BACKEND_API_URL;
     const token = localStorage.getItem('token');
@@ -27,7 +28,21 @@ function StoreMainPage() {
         setSelectValue(value); // Update the dropdown's value
     };
 
+    // Use custom hook for authentication
+    const { userInfo, statusCode } = useAuthCheck();
+
     useEffect(()=>{
+
+        if (statusCode === null) {
+            // Wait for auth check to complete
+            return;
+        }
+
+        if (statusCode === 401) {
+            console.log("Unauthorized! Redirect to login or display an error.");
+            return;
+        }
+
         console.log(page,status,activeOption)
         const params={
             pageNumber:page,
@@ -46,7 +61,7 @@ function StoreMainPage() {
                 setTotal(res.data.data.total)
 
             })
-    },[page,status,activeOption])
+    },[statusCode,page,status,activeOption])
 
     return (
         <div>
@@ -151,7 +166,7 @@ function StoreMainPage() {
                         })
                     }
                 </div>
-                <div style={{width: '100%', marginTop: 20, padding: 10}}>
+                <div style={{width: '100%', marginTop: 20}}>
                     <Pagination defaultCurrent={1} total={total} align={'center'} defaultPageSize={10} showSizeChanger={false}
                                 onChange={(page)=>{setPage(page)}}/>
                 </div>

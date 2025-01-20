@@ -73,7 +73,7 @@ items = [
     {
         key: '1',
         label: (
-            <a target="_blank" rel="noopener noreferrer" href={`${baseUrl}/myAccount`}>
+            <a  rel="noopener noreferrer" href={`${baseUrl}/myAccount`}>
                 My Account
             < /a>
         ),
@@ -81,7 +81,7 @@ items = [
     {
         key: '2',
         label: (
-            <a target="_blank"  href={baseUrl+'/myStore'}>
+            <a   href={baseUrl+'/myStore'}>
                 My Store
             </a>
         ),
