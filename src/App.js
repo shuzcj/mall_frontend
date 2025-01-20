@@ -10,6 +10,7 @@ import MyAccount from "./components/myAccount/MyAccount";
 import PurchaseConfirmationPage from "./components/purchase/purchaseConfirmationPage";
 import PurchaseResult from "./components/purchase/purchaseResultPage";
 import MyStoreMainPage from "./components/store/myStoreMainPage";
+import Register from "./components/login/register";
 
 
 function App() {
@@ -19,8 +20,9 @@ function App() {
                 <Routes>
                     <Route path="/main" element={<MainPage />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/product" element={<ProductMainPage />} />
-                    <Route path="/store" element={<StoreMainPage/>}/>
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/product/:productId" element={<ProductMainPage />} />
+                    <Route path="/store/:userId" element={<StoreMainPage/>}/>
                     <Route path="/myStore" element={<MyStoreMainPage />} />
                     <Route path="/myAccount" element={<MyAccount />} />
                     <Route path="/purchaseConfirmation" element={<PurchaseConfirmationPage />} />

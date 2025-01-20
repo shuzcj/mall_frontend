@@ -45,6 +45,7 @@ function AddProductsModal(props) {
         formData.append('stock', values.stock);
         formData.append('status', values.status);
         formData.append('categoryId', values.category);
+        formData.append('userId', props.userId);
         fileList.forEach(file => {
                 formData.append('images', file.originFileObj); // Only new images
         });

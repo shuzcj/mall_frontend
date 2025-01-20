@@ -10,7 +10,7 @@ import axios from "axios";
 import useAuthCheck from "../hooks/useAuthCheck";
 function StoreMainPage() {
     const apiBaseUrl = process.env.REACT_APP_BACKEND_API_URL;
-    const token = localStorage.getItem('token');
+
     const [activeOption, setActiveOption] = useState("latest"); // Track the active option,latest,topSales,asc,desc
     const [selectValue, setSelectValue] = useState(null); // Track the selected value in the dropdown
     const [page,setPage]=useState(1);
@@ -43,30 +43,33 @@ function StoreMainPage() {
             return;
         }
 
-        console.log(page,status,activeOption)
-        const params={
-            pageNumber:page,
-            pageSize:10,
-            status:status,
-            sort:activeOption,
-            userId:null,
+        if(statusCode === 200) {
+            const token = localStorage.getItem('token');
+            console.log(page, status, activeOption)
+            const params = {
+                pageNumber: page,
+                pageSize: 10,
+                status: status,
+                sort: activeOption,
+                userId: userInfo.id,
 
+            }
+            axios.get(
+                apiBaseUrl + '/product',
+                {params: params, headers: {'Authorization': `Bearer ${token}`}})
+                .then(res => {
+                    console.log(res.data)
+                    setProducts(res.data.data.products)
+                    setTotal(res.data.data.total)
+
+                })
         }
-        axios.get(
-            apiBaseUrl+'/product',
-            {params:params, headers: {'Authorization': `Bearer ${token}`}})
-            .then(res=>{
-                console.log(res.data)
-                setProducts(res.data.data.products)
-                setTotal(res.data.data.total)
-
-            })
     },[statusCode,page,status,activeOption])
 
     return (
         <div>
             <header className="header">
-                <TopBar/>
+                <TopBar userName={userInfo?userInfo.userName:""}/>
             </header>
             <div style={{paddingTop:160,margin:"20px 0 20px 0",width:"100%",height:120,backgroundColor:"white"}}>
                 <div style={{justifyContent:"start",display:"flex",width:1400,margin:"0 auto 0 auto"}}>
@@ -139,7 +142,8 @@ function StoreMainPage() {
                                     {value: 'unlisted', label: "Unlisted"}
                                 ]}
                         />
-                        <AddProductsModal/>
+                        {userInfo ? <AddProductsModal userId={userInfo.id}/> : null}
+
 
                     </div>
                 </div>

@@ -9,7 +9,7 @@ const { Search } = Input;
 
 
 var items;
-function TopBar() {
+function TopBar(props) {
 
 
     const searchAxios=(value)=>{
@@ -38,7 +38,7 @@ function TopBar() {
                         <a href="#" style={{color:"rgba(0,0,0,.6)",fontWeight:500,}} onClick={(e) => e.preventDefault()}>
                             <Space>
                                 <Avatar size={28}/>
-                                name
+                                {props.userName}
                             </Space>
                         </a>
 

@@ -10,3 +10,11 @@
     margin: 20px auto 20px auto;
     padding-top:160px;
 }
+
+.productInfoItem{
+    justify-content: start;
+    display:flex;
+    font-weight: bold;
+    align-items: center;
+    height: 90px
+}

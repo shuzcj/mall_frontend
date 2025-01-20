@@ -3,13 +3,14 @@ import { Image } from "antd";
 
 function ImagesDisplay({ imageUrls }) {
     // State to track the currently displayed image
-    const [imageNow, setImageNow] = useState("");
+    const [imageNow, setImageNow] = useState('');
     // State to track the hovered thumbnail
     const [hoveredIndex, setHoveredIndex] = useState(null);
+    const apiBaseUrl = process.env.REACT_APP_BACKEND_API_URL;
 
     useEffect(() => {
         if(imageUrls.length > 0) {
-            setImageNow(imageUrls[0]);
+            setImageNow(process.env.REACT_APP_BACKEND_API_URL+'/images/products/'+imageUrls[0]);
         }
         else {
             setImageNow("");
@@ -22,6 +23,7 @@ function ImagesDisplay({ imageUrls }) {
             <div style={{ width: 112, height: 504, borderRadius: 5, overflowY: "auto",padding:"2px 10px 2px 2px" }} >
                 {
                     imageUrls.map((url, index) => (
+                        url.length > 0 &&
                         <Image
                             key={index}
                             style={{
@@ -32,13 +34,11 @@ function ImagesDisplay({ imageUrls }) {
                                 cursor: "pointer",
                                 objectFit: "cover",
                                 outline: hoveredIndex === index ? "2px solid red" : "none",//outline does not affect the box model, meaning it will not shrink the content inside the element.
-                                //The outline is drawn outside the element, so the image remains the same size.
-                                //border: hoveredIndex === index ? "2px solid red" : "none"  // Apply red border on hover
-                            }}
-                            src={url}
+                                }}
+                            src={apiBaseUrl+'/images/products/'+url}
                             preview={false} // Disable image preview
                             onMouseEnter={() => {
-                                setImageNow(url);
+                                setImageNow(apiBaseUrl+'/images/products/'+url);
                                 setHoveredIndex(index);  // Set the hovered image
                             }}
                         />

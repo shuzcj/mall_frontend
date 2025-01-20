@@ -8,6 +8,12 @@ const useAuthCheck = () => {
     const apiBaseUrl = process.env.REACT_APP_BACKEND_API_URL;
 
     useEffect(() => {
+        if(userInfo!==undefined && userInfo!==null){
+            document.title = `${userInfo.userName}'s Dashboard`;
+        }
+    }, [userInfo]);
+
+    useEffect(() => {
 
         console.log("useAuthCheck...")
 
@@ -36,6 +42,7 @@ const useAuthCheck = () => {
                 setStatusCode(200);
                 setUserInfo(res.data.data);
                 sessionStorage.setItem("userInfo",JSON.stringify(res.data.data));
+
             }
             else{
                 console.log("get user info failed")
