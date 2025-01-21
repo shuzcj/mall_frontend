@@ -3,6 +3,8 @@ import {Image} from "antd";
 
 function SettlementCard(props){
 
+    const apiBaseUrl = process.env.REACT_APP_BACKEND_API_URL;
+
     return (
         <div style={{borderRadius:10,padding:20,border:'solid 1px ',borderColor:'#dfdfdf',height:200,
             width:'100%',
@@ -15,7 +17,7 @@ function SettlementCard(props){
             </div>
             <div style={{display:"flex",justifyContent:"space-between"}}>
                 <div style={{display:"flex",justifyContent:'start'}}>
-                    <Image width={120} height={120} src={props.cardInfo.productImage}/>
+                    <Image width={120} height={120} src={apiBaseUrl+"/images/products/"+props.cardInfo.productImage}/>
                     <div style={{marginLeft:20,fontSize:24}}>{props.cardInfo.productName}</div>
                 </div>
                 <div style={{fontSize:32}}>

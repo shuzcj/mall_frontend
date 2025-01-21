@@ -19,6 +19,7 @@ const useAuthCheck = () => {
 
         const storedUserInfo = sessionStorage.getItem("userInfo");
         if (storedUserInfo) {
+            console.log("there is session storage!",storedUserInfo)
             setUserInfo(JSON.parse(storedUserInfo));
 
             setStatusCode(200);

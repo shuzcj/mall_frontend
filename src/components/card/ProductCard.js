@@ -1,13 +1,15 @@
 import react from 'react';
 import {Image} from "antd";
 import {StarFilled} from "@ant-design/icons";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 function ProductCard(props) {
 
     const imagesBaseUrl=process.env.REACT_APP_BACKEND_API_URL+'/images/products/';
-
+    const navigate = useNavigate(); // Create navigate instance
     return (
-        <div style={{
+        <div
+            style={{
             width: 192,
             height: 327,
             backgroundColor: "white",
@@ -25,7 +27,7 @@ function ProductCard(props) {
                  e.currentTarget.style.boxShadow = 'none';
                  e.currentTarget.style.transform = 'translateY(0px)';
              }}
-             onClick={() => {console.log(1)}}
+             onClick={() => { navigate(`/product/${props.data.id}`); }}
         >
             <Image height={190} width={192} preview={false} src={imagesBaseUrl+props.data.imageUrls.split(',')[0]}/>
             <div style={{padding: 10}}>

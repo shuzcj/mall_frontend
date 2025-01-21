@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { AudioOutlined } from '@ant-design/icons';
 import {Avatar, Dropdown, Input, Select, Space} from 'antd';
 import AdvancedSearch from "./AdvancedSearch";
@@ -22,6 +22,7 @@ function TopBar(props) {
     function onSearch(value, _e, info) {
         searchAxios(value);
     }
+
 
     return (
         <div style={{width:"100%", background: "#ffffff" }}>

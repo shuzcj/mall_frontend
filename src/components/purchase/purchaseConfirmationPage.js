@@ -1,4 +1,4 @@
-import react, {useState} from "react";
+import react, {useEffect, useState} from "react";
 import TopBar from "../header/TopBar";
 import {Breadcrumb, Button} from "antd";
 import React from "react";
@@ -6,23 +6,46 @@ import { Typography } from 'antd';
 import SettlementCard from "../card/SettlementCard";
 import {calc} from "antd/es/theme/internal";
 import OrderCard from "../card/OrderCard";
+import {useLocation} from "react-router-dom";
+import useAuthCheck from "../hooks/useAuthCheck";
+import axios from "axios";
 const { Title } = Typography;
 
 function PurchaseConfirmationPage(props) {
-    const [cardInfo, setCardInfo] = useState(
-        {
-            storeAvatar: "/temp/cat.jpg",
-            storeName: "storeName",
-            productName: "productName",
-            productImage: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-            price: "100",
-            quantity: "2",
-            totalPrice: "200",
-            orderTime: "orderTime",
-            orderStatus: "orderStatus",
 
+    const location = useLocation();
+
+    const orderInfo = location.state.orderInfo;
+    const {userInfo, statusCode} = useAuthCheck();
+    const apiBaseUrl = process.env.REACT_APP_BACKEND_API_URL;
+
+    useEffect(() => {
+        console.log(location.state)
+        //ToDo: if the orderInfo is null, redirect to the previous page
+        var totalPrice = 0;
+        for(let i = 0; i < orderInfo.length; i++){
+            totalPrice += orderInfo[i].totalPrice;
         }
-    )
+        setTotalPrice(totalPrice);
+    }, [location.state])
+
+    const confirm=()=>{
+        console.log("confirm")
+        console.log(orderInfo)
+        var orderItems = []
+        for(let i = 0; i < orderInfo.length; i++){
+            orderItems.push({
+                productId: orderInfo[i].productId,
+                quantity: orderInfo[i].quantity
+            })
+        }
+        axios.post(apiBaseUrl + '/order', {
+            userId:userInfo.id,
+            orderItems:orderItems
+        }).then(res=>{
+            console.log(res.data)
+        })
+    }
 
     const [totalPrice, setTotalPrice] = useState(0)
     return (
@@ -58,18 +81,18 @@ function PurchaseConfirmationPage(props) {
                     </div>
                     <div style={{marginTop: 20}}>
                         {
-                            [1, 2, 3].map((item, index) => (
+                            orderInfo.map((item, index) => (
                                 <div style={{margin: 20, width: calc('100%' - 40)}} key={index}>
-                                    <SettlementCard cardInfo={cardInfo}/>
+                                    <SettlementCard cardInfo={item}/>
                                 </div>
                             ))
                         }
                     </div>
                     <div style={{marginTop: 20, marginRight: 40}}>
                         <div style={{textAlign: "end", fontSize: 32,margin:20}}>Total Price : {totalPrice}</div>
-                        <div style={{textAlign: "end", fontSize: 32,margin:20}}>Account Balance : 100000</div>
+
                         <div style={{textAlign:"end",margin:20}}>
-                            <Button  style={{width:200,height:80,fontSize:32,color:"white"}} type={'primary'}>check out</Button>
+                            <Button  style={{width:200,height:80,fontSize:32,color:"white"}} type={'primary'} onClick={()=>confirm()}>confirm</Button>
                         </div>
                     </div>
                 </div>

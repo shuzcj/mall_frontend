@@ -8,15 +8,17 @@ import ImagesDisplay from "./ImagesDisplay";
 import DetailDisplay from "./DetailDisplay";
 import Comment from "./Comment";
 import useAuthCheck from "../hooks/useAuthCheck";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 function ProductMainPage(props) {
     const { productId } = useParams();
     const [imageUrls, setImageUrls] = useState([]);
     const {userInfo, statusCode} = useAuthCheck();
+    const [count, setCount] = useState(1);
     const [productInfo, setProductInfo] = useState(null);
     const [businessInfo, setBusinessInfo] = useState(null);
     const apiBaseUrl = process.env.REACT_APP_BACKEND_API_URL;
+    const navigate = useNavigate(); // Create navigate instance
 
     useEffect(() => {
         // Assume these are the image URLs you get from an API
@@ -75,7 +77,7 @@ function ProductMainPage(props) {
     return (
         <div>
             <header className="header">
-                <TopBar/>
+                <TopBar userName={userInfo ? userInfo.userName : ""}/>
             </header>
             <div className="content">
                 <Breadcrumb style={{ margin: '16px 0' }}
@@ -101,7 +103,7 @@ function ProductMainPage(props) {
 
                 <div className="item" style={{ marginTop: 20, padding: 10,display:"flex",justifyContent:'space-between' }}>
                     <ImagesDisplay imageUrls={productInfo?productInfo.imageUrls.split(','):[]} />
-                    <DetailDisplay productInfo={productInfo}/>
+                    <DetailDisplay productInfo={productInfo} businessInfo={businessInfo}/>
                 </div>
 
                 <div className='item' style={{marginTop:20,padding:10}}>
